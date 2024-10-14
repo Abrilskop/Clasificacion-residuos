@@ -1,0 +1,49 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#007ACC', 'edgeLabelBackground':'#FFFFFF', 'tertiaryColor': '#fff0f0'}}}%%
+sequenceDiagram
+    participant U as Usuario
+    participant S as Sistema
+    participant BD as Base de Datos
+
+    U->>S: Se acerca al sistema
+    S->>S: Activa cámara y parlante
+    S->>S: Detecta presencia
+    
+    alt Es usuario nuevo
+        S->>U: "¿Necesitas ayuda para desechar tu residuo?"
+        
+        alt Usuario acepta ayuda
+            U->>S: Confirma
+            S->>S: Toma fotos del usuario
+            S->>S: Identifica residuo
+            S->>BD: Guarda fecha y hora
+            S->>U: "¿Te gustaría guardar tu información?"
+            
+            alt Usuario desea guardar info
+                U->>S: Confirma
+                S->>U: Solicita nombre y escuela
+                U->>S: Proporciona información
+                S->>BD: Guarda información del usuario
+                S->>BD: Asocia info de usuario con residuo
+            else Usuario no desea guardar info
+                S->>U: "Gracias por cuidar el medio ambiente"
+            end
+        else Usuario rechaza ayuda
+            S->>S: Elimina fotos y registros temporales
+        end
+    else Es usuario registrado
+        S->>BD: Consulta información del usuario
+        BD->>S: Devuelve datos del usuario
+        S->>U: "Hola de nuevo, [nombre_usuario]"
+        S->>U: "¿Necesitas ayuda para desechar tu residuo?"
+        
+        alt Usuario acepta ayuda
+            U->>S: Confirma
+            S->>S: Identifica residuo
+            S->>BD: Guarda fecha, hora y tipo de residuo
+            S->>U: "Gracias por ayudarnos a clasificar residuos en la UAC"
+        else Usuario rechaza ayuda
+            S->>U: "Está bien, nos vemos otro día :)"
+        end
+    end
+
+    S->>S: Finaliza interacción
