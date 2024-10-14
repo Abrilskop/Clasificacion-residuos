@@ -1,0 +1,26 @@
+flowchart TD
+    A[Usuario se acerca] --> B[Sistema activa cámara y parlante]
+    B --> C[Sistema detecta persona]
+    C --> D{Usuario registrado?}
+    D -->|No| E{Necesita ayuda?}
+    D -->|Sí| Q[Saludo: Hola nombre_usuario]
+    E -->|Sí| F[Toma fotos del usuario]
+    E -->|No| G[Elimina fotos y registros]
+    G --> H[Fin]
+    F --> I[Identifica residuo]
+    I --> J[Guarda fecha y hora]
+    J --> K{Guardar información?}
+    K -->|Sí| L[Solicita nombre y escuela]
+    K -->|No| M[Mensaje: Gracias por reciclar]
+    M --> H
+    L --> N[Usuario da información]
+    N --> O[Guarda info del usuario]
+    O --> P[Une info usuario y residuo]
+    P --> H
+    Q --> R{Necesita ayuda?}
+    R -->|Sí| S[Identifica residuo]
+    R -->|No| T[Mensaje: Nos vemos pronto]
+    T --> H
+    S --> U[Guarda fecha y hora]
+    U --> V[Mensaje: Gracias por clasificar]
+    V --> H
